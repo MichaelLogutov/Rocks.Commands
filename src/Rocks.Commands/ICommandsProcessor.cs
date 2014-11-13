@@ -25,18 +25,8 @@ namespace Rocks.Commands
 		/// </summary>
 		/// <typeparam name="TResult">Type of the command result.</typeparam>
 		/// <param name="command">Command instance to execute.</param>
-		[DebuggerStepThrough]
-		Task<TResult> ExecuteAsync<TResult> ([NotNull] IAsyncCommand<TResult> command);
-
-
-		/// <summary>
-		///     Executes specified <paramref name="command" /> asynchronously
-		///     using <see cref="IAsyncCommandHandler{TCommand,TResult}"/> (needs to be registered).
-		/// </summary>
-		/// <typeparam name="TResult">Type of the command result.</typeparam>
-		/// <param name="command">Command instance to execute.</param>
 		/// <param name="cancellationToken">Task cancellation token.</param>
 		[DebuggerStepThrough]
-		Task<TResult> ExecuteAsync<TResult> ([NotNull] IAsyncCommand<TResult> command, CancellationToken cancellationToken);
+		Task<TResult> ExecuteAsync<TResult> ([NotNull] IAsyncCommand<TResult> command, CancellationToken cancellationToken = default (CancellationToken));
 	}
 }

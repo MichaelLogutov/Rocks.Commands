@@ -17,6 +17,6 @@ namespace Rocks.Commands
 		/// </summary>
 		/// <param name="command">Command to be executed.</param>
 		/// <param name="cancellationToken">Task cancellation token.</param>
-		Task<TResult> ExecuteAsync ([NotNull] TCommand command, CancellationToken cancellationToken);
+		Task<TResult> ExecuteAsync ([NotNull] TCommand command, CancellationToken cancellationToken = default(CancellationToken));
 	}
 }

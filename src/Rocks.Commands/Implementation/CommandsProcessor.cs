@@ -41,19 +41,7 @@ namespace Rocks.Commands.Implementation
 
 
 		[DebuggerStepThrough]
-		public async Task<TResult> ExecuteAsync<TResult> (IAsyncCommand<TResult> command)
-		{
-			Validate (command);
-
-			var handler = this.GetAsyncHandler (command);
-
-			return await handler.ExecuteAsync ((dynamic) command, CancellationToken.None)
-			                    .ConfigureAwait (false);
-		}
-
-
-		[DebuggerStepThrough]
-		public async Task<TResult> ExecuteAsync<TResult> (IAsyncCommand<TResult> command, CancellationToken cancellationToken)
+		public async Task<TResult> ExecuteAsync<TResult> (IAsyncCommand<TResult> command, CancellationToken cancellationToken = default (CancellationToken))
 		{
 			Validate (command);
 
