@@ -34,13 +34,13 @@ namespace Rocks.Commands.Tests
 		public void ShouldRegisterAndHandleCommand ()
 		{
 			// arrange
-			Commands.Setup ();
+			CommandsLibrary.Setup ();
 
 			var command = new TestCommand { Number = 1 };
 
 
 			// act
-			var result = Commands.CommandsProcessor.ExecuteAsync (command).Result;
+			var result = CommandsLibrary.CommandsProcessor.ExecuteAsync (command).Result;
 
 
 			// assert

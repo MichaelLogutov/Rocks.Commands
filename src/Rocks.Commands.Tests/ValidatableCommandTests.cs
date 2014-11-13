@@ -36,13 +36,13 @@ namespace Rocks.Commands.Tests
 		public void ShouldVerifyCommandBeforeHandling ()
 		{
 			// arrange
-			Commands.Setup ();
+			CommandsLibrary.Setup ();
 
 			var query = new TestCommand { Number = 1 };
 
 
 			// act
-			var action = new Action (() => Commands.CommandsProcessor.Execute (query));
+			var action = new Action (() => CommandsLibrary.CommandsProcessor.Execute (query));
 
 
 			// assert

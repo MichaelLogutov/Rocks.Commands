@@ -28,13 +28,13 @@ namespace Rocks.Commands.Tests
 		public void ShouldRegisterAndHandleQuery ()
 		{
 			// arrange
-			Commands.Setup ();
+			CommandsLibrary.Setup ();
 
 			var query = new TestQuery { Number = 1 };
 
 
 			// act
-			var result = Commands.CommandsProcessor.Execute (query);
+			var result = CommandsLibrary.CommandsProcessor.Execute (query);
 
 
 			// assert

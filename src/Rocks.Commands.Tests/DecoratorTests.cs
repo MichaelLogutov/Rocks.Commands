@@ -73,14 +73,14 @@ namespace Rocks.Commands.Tests
 		public void ShouldRegisterAndUseOpenGenericDecorator ()
 		{
 			// arrange
-			Commands.Setup ();
-			Commands.RegisterCommandsDecorator (typeof (TestDecorator<,>));
+			CommandsLibrary.Setup ();
+			CommandsLibrary.RegisterCommandsDecorator (typeof (TestDecorator<,>));
 
 			var command = new TestDecoratableCommand { Number = 1 };
 
 
 			// act
-			var result = Commands.CommandsProcessor.Execute (command);
+			var result = CommandsLibrary.CommandsProcessor.Execute (command);
 
 
 			// assert
@@ -93,14 +93,14 @@ namespace Rocks.Commands.Tests
 		public void OpenGenericDecoratorShouldNotBeAppliedToNotSupportedCommands ()
 		{
 			// arrange
-			Commands.Setup ();
-			Commands.RegisterCommandsDecorator (typeof (TestDecorator<,>));
+			CommandsLibrary.Setup ();
+			CommandsLibrary.RegisterCommandsDecorator (typeof (TestDecorator<,>));
 
 			var command = new TestNotDecoratableCommand { Number = 1 };
 
 
 			// act
-			var result = Commands.CommandsProcessor.Execute (command);
+			var result = CommandsLibrary.CommandsProcessor.Execute (command);
 
 
 			// assert

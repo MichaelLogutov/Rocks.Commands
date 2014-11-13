@@ -19,13 +19,13 @@ namespace Rocks.Commands.Tests
 		public void Execute_CommandWithVoid_Executes ()
 		{
 			// arrange
-			Commands.Setup ();
+			CommandsLibrary.Setup ();
 
 			var command = new TestCommand { Number = 1 };
 
 
 			// act
-			var result = Commands.CommandsProcessor.Execute (command);
+			var result = CommandsLibrary.CommandsProcessor.Execute (command);
 
 
 			// assert
@@ -38,13 +38,13 @@ namespace Rocks.Commands.Tests
 		public void Execute_CommandAndHandlerInDifferentLibraries_Executes ()
 		{
 			// arrange
-			Commands.Setup (assemblies: new[] { typeof (ILibraryA).Assembly, typeof (ILibraryB).Assembly });
+			CommandsLibrary.Setup (assemblies: new[] { typeof (ILibraryA).Assembly, typeof (ILibraryB).Assembly });
 
 			var command = new CrossLibraryTestCommand { Number = 1 };
 
 
 			// act
-			var result = Commands.CommandsProcessor.Execute (command);
+			var result = CommandsLibrary.CommandsProcessor.Execute (command);
 
 
 			// assert
@@ -61,7 +61,7 @@ namespace Rocks.Commands.Tests
 
 
 			// act
-			var action = new Action (() => Commands.Setup ());
+			var action = new Action (() => CommandsLibrary.Setup ());
 
 
 			// assert
@@ -76,7 +76,7 @@ namespace Rocks.Commands.Tests
 
 
 			// act
-			var action = new Action (() => Commands.Setup (assemblies: new[] { typeof (ILibraryC).Assembly }));
+			var action = new Action (() => CommandsLibrary.Setup (assemblies: new[] { typeof (ILibraryC).Assembly }));
 
 
 			// assert
@@ -99,7 +99,7 @@ namespace Rocks.Commands.Tests
 
 
 			// act
-			var action = new Action (() => Commands.Setup (assemblies: new[] { typeof (ILibraryD).Assembly }));
+			var action = new Action (() => CommandsLibrary.Setup (assemblies: new[] { typeof (ILibraryD).Assembly }));
 
 
 			// assert

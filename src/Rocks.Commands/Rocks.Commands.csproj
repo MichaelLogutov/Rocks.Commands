@@ -60,7 +60,7 @@
   <ItemGroup>
     <Compile Include="Exceptions\CommandException.cs" />
     <Compile Include="Exceptions\CommandHandlerNotFoundException.cs" />
-    <Compile Include="Commands.cs" />
+    <Compile Include="CommandsLibrary.cs" />
     <Compile Include="IAsyncCommandHandler.cs" />
     <Compile Include="IAsyncCommand.cs" />
     <Compile Include="Implementation\CommandsProcessor.cs" />

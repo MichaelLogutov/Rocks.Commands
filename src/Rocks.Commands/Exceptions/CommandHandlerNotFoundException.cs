@@ -5,8 +5,8 @@ namespace Rocks.Commands.Exceptions
 {
 	/// <summary>
 	///     Exception thrown by
-	///     <see cref="Commands.Setup" />
-	///     or <see cref="Commands.RegisterAllCommandHandlers" /> methods
+	///     <see cref="CommandsLibrary.Setup" />
+	///     or <see cref="CommandsLibrary.RegisterAllCommandHandlers" /> methods
 	///     when there is a command without corresponding command handler.
 	/// </summary>
 	[Serializable]

@@ -15,7 +15,7 @@ namespace Rocks.Commands
 	///     Call <see cref="Setup" />
 	///     method to initialize the library.
 	/// </summary>
-	public static class Commands
+	public static class CommandsLibrary
 	{
 		#region Private fields
 
