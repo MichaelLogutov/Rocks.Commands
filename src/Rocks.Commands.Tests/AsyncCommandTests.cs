@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Rocks.Commands.Tests
 {
 	[TestClass]
-	public class IAsyncCommandTests
+	public class AsyncCommandTests
 	{
 		public class TestCommand : IAsyncCommand<int>
 		{
@@ -21,17 +21,17 @@ namespace Rocks.Commands.Tests
 		{
 			public async Task<int> ExecuteAsync (TestCommand command, CancellationToken cancellationToken)
 			{
-				return await Task.Run (() =>
-				{
-					command.Number++;
-					return command.Number;
-				}, cancellationToken);
+				await Task.Yield ();
+
+				command.Number++;
+
+				return command.Number;
 			}
 		}
 
 
 		[TestMethod]
-		public void ShouldRegisterAndHandleCommand ()
+		public async Task Always_RegisterAndHandlesTheCommand ()
 		{
 			// arrange
 			CommandsLibrary.Setup ();
@@ -40,7 +40,26 @@ namespace Rocks.Commands.Tests
 
 
 			// act
-			var result = CommandsLibrary.CommandsProcessor.ExecuteAsync (command).Result;
+			var result = await CommandsLibrary.CommandsProcessor.ExecuteAsync (command);
+
+
+			// assert
+			result.Should ().Be (2);
+			command.Number.Should ().Be (2);
+		}
+
+
+		[TestMethod]
+		public async Task ExecuteArbitraryCommand_HandlesTheCommand ()
+		{
+			// arrange
+			CommandsLibrary.Setup ();
+
+			var command = new TestCommand { Number = 1 };
+
+
+			// act
+			var result = await CommandsLibrary.CommandsProcessor.ExecuteAsync ((IAsyncCommand) command);
 
 
 			// assert

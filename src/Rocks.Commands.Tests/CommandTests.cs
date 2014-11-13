@@ -114,6 +114,25 @@ namespace Rocks.Commands.Tests
 			                                               .Including (x => x.ResultType));
 		}
 
+
+		[TestMethod]
+		public void ExecuteArbitraryCommand_HandlesTheCommand ()
+		{
+			// arrange
+			CommandsLibrary.Setup ();
+
+			var command = new TestCommand { Number = 1 };
+
+
+			// act
+			var result = CommandsLibrary.CommandsProcessor.Execute ((ICommand) command);
+
+
+			// assert
+			result.Should ().Be (Void.Result);
+			command.Number.Should ().Be (2);
+		}
+
 		#endregion
 
 		#region Nested type: TestCommand

@@ -20,6 +20,14 @@ namespace Rocks.Commands
 
 
 		/// <summary>
+		///     Executes arbitrary <paramref name="command" />.
+		/// </summary>
+		/// <param name="command">Command instance to execute.</param>
+		[DebuggerStepThrough]
+		object Execute ([NotNull] ICommand command);
+
+
+		/// <summary>
 		///     Executes specified <paramref name="command" /> asynchronously
 		///     using <see cref="IAsyncCommandHandler{TCommand,TResult}"/> (needs to be registered).
 		/// </summary>
@@ -28,5 +36,14 @@ namespace Rocks.Commands
 		/// <param name="cancellationToken">Task cancellation token.</param>
 		[DebuggerStepThrough]
 		Task<TResult> ExecuteAsync<TResult> ([NotNull] IAsyncCommand<TResult> command, CancellationToken cancellationToken = default (CancellationToken));
+
+
+		/// <summary>
+		///     Executes arbitrary <paramref name="command" />.
+		/// </summary>
+		/// <param name="command">Command instance to execute.</param>
+		/// <param name="cancellationToken">Task cancellation token.</param>
+		[DebuggerStepThrough]
+		Task<object> ExecuteAsync ([NotNull] IAsyncCommand command, CancellationToken cancellationToken = default (CancellationToken));
 	}
 }
