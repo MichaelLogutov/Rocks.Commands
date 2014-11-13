@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle ("Rocks.Commands")]
-[assembly: AssemblyDescription ("A library to execute domain commands and handle their execution.")]
+[assembly: AssemblyDescription ("An implementation of the command/query pattern.")]
 [assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("Michael Logutov")]
 [assembly: AssemblyProduct ("Rocks.Commands")]
