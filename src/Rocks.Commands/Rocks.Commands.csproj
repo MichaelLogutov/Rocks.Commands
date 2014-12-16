@@ -61,8 +61,11 @@
     <Compile Include="Exceptions\CommandException.cs" />
     <Compile Include="Exceptions\CommandHandlerNotFoundException.cs" />
     <Compile Include="CommandsLibrary.cs" />
+    <Compile Include="Extensions\DecoratorsExtensions.cs" />
     <Compile Include="IAsyncCommandHandler.cs" />
     <Compile Include="IAsyncCommand.cs" />
+    <Compile Include="IAsyncDecorator.cs" />
+    <Compile Include="IDecorator.cs" />
     <Compile Include="Implementation\CommandsProcessor.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="ICommandHandlerFactory.cs" />

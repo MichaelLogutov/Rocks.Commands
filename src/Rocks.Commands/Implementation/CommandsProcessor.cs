@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -40,7 +41,7 @@ namespace Rocks.Commands.Implementation
 		{
 			Validate (command);
 
-			var handler = this.GetHandler (command);
+			var handler = this.GetHandler (command.GetType (), typeof (TResult));
 
 			return handler.Execute ((dynamic) command);
 		}
@@ -73,7 +74,7 @@ namespace Rocks.Commands.Implementation
 		{
 			Validate (command);
 
-			var handler = this.GetAsyncHandler (command);
+			var handler = this.GetAsyncHandler (command.GetType (), typeof (TResult));
 
 			return handler.ExecuteAsync ((dynamic) command, cancellationToken);
 		}
@@ -95,6 +96,46 @@ namespace Rocks.Commands.Implementation
 			                    .ConfigureAwait (false);
 		}
 
+
+		/// <summary>
+		///     Returns the list of decorators instances that registered for a given command.
+		/// </summary>
+		public IList<IDecorator<TCommand, TResult>> GetAllDecorators<TCommand, TResult> () where TCommand : ICommand<TResult>
+		{
+			var result = new List<IDecorator<TCommand, TResult>> ();
+
+			var handler = this.GetHandler (typeof (TCommand), typeof (TResult));
+
+			var decorator = handler as IDecorator<TCommand, TResult>;
+			while (decorator != null)
+			{
+				result.Add (decorator);
+				decorator = decorator.Decorated as IDecorator<TCommand, TResult>;
+			}
+
+			return result;
+		}
+
+
+		/// <summary>
+		///     Returns the list of async decorators instances that registered for a given command.
+		/// </summary>
+		public IList<IAsyncDecorator<TCommand, TResult>> GetAllAsyncDecorators<TCommand, TResult> () where TCommand : IAsyncCommand<TResult>
+		{
+			var result = new List<IAsyncDecorator<TCommand, TResult>> ();
+
+			var handler = this.GetHandler (typeof (TCommand), typeof (TResult));
+
+			var decorator = handler as IAsyncDecorator<TCommand, TResult>;
+			while (decorator != null)
+			{
+				result.Add (decorator);
+				decorator = decorator.Decorated as IAsyncDecorator<TCommand, TResult>;
+			}
+
+			return result;
+		}
+
 		#endregion
 
 		#region Private methods
@@ -110,16 +151,6 @@ namespace Rocks.Commands.Implementation
 		}
 
 
-		private dynamic GetHandler<TResult> (ICommand<TResult> command)
-		{
-			var type = typeof (ICommandHandler<,>).MakeGenericType (command.GetType (), typeof (TResult));
-
-			dynamic handler = this.commandHandlerFactory.GetCommandHandler (type);
-
-			return handler;
-		}
-
-
 		private dynamic GetHandler (ICommand command)
 		{
 			var type = GetCommandHandlerType (command, typeof (ICommand<>), typeof (ICommandHandler<,>));
@@ -130,9 +161,9 @@ namespace Rocks.Commands.Implementation
 		}
 
 
-		private dynamic GetAsyncHandler<TResult> (IAsyncCommand<TResult> command)
+		private dynamic GetHandler (Type commandType, Type commandReturnType)
 		{
-			var type = typeof (IAsyncCommandHandler<,>).MakeGenericType (command.GetType (), typeof (TResult));
+			var type = typeof (ICommandHandler<,>).MakeGenericType (commandType, commandReturnType);
 
 			dynamic handler = this.commandHandlerFactory.GetCommandHandler (type);
 
@@ -143,6 +174,16 @@ namespace Rocks.Commands.Implementation
 		private dynamic GetAsyncHandler (IAsyncCommand command)
 		{
 			var type = GetCommandHandlerType (command, typeof (IAsyncCommand<>), typeof (IAsyncCommandHandler<,>));
+
+			dynamic handler = this.commandHandlerFactory.GetCommandHandler (type);
+
+			return handler;
+		}
+
+
+		private dynamic GetAsyncHandler (Type commandType, Type commandReturnType)
+		{
+			var type = typeof (IAsyncCommandHandler<,>).MakeGenericType (commandType, commandReturnType);
 
 			dynamic handler = this.commandHandlerFactory.GetCommandHandler (type);
 

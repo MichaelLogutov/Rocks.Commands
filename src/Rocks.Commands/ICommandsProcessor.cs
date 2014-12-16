@@ -1,4 +1,7 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -45,5 +48,19 @@ namespace Rocks.Commands
 		/// <param name="cancellationToken">Task cancellation token.</param>
 		[DebuggerStepThrough]
 		Task<object> ExecuteAsync ([NotNull] IAsyncCommand command, CancellationToken cancellationToken = default (CancellationToken));
+
+
+		/// <summary>
+		///     Returns the list of decorators instances that registered for a given command.
+		/// </summary>
+		[DebuggerStepThrough, NotNull]
+		IList<IDecorator<TCommand, TResult>> GetAllDecorators<TCommand, TResult> () where TCommand : ICommand<TResult>;
+
+
+		/// <summary>
+		///     Returns the list of async decorators instances that registered for a given command.
+		/// </summary>
+		[DebuggerStepThrough, NotNull]
+		IList<IAsyncDecorator<TCommand, TResult>> GetAllAsyncDecorators<TCommand, TResult> () where TCommand : IAsyncCommand<TResult>;
 	}
 }
