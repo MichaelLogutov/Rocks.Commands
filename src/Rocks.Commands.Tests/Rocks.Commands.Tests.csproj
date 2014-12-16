@@ -76,34 +76,26 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AsyncCommands\AsyncCommandTests.cs" />
-    <Compile Include="AsyncCommands\TestCommand.cs" />
-    <Compile Include="AsyncCommands\TestCommandHandler.cs" />
-    <Compile Include="Commands\TestCommand.cs" />
-    <Compile Include="Commands\TestCommand2.cs" />
-    <Compile Include="Commands\TestCommandHandler.cs" />
-    <Compile Include="AsyncDecorators\AsyncDecoratorTests.cs" />
-    <Compile Include="AsyncDecorators\IDecoratableCommand.cs" />
-    <Compile Include="AsyncDecorators\TestDecoratableCommand.cs" />
-    <Compile Include="AsyncDecorators\TestDecoratableAsyncCommandHandler.cs" />
-    <Compile Include="AsyncDecorators\TestAsyncDecorator.cs" />
-    <Compile Include="AsyncDecorators\TestNotDecoratableCommand.cs" />
-    <Compile Include="AsyncDecorators\TestNotDecoratableCommandHandler.cs" />
-    <Compile Include="Decorators\IDecoratableCommand.cs" />
-    <Compile Include="Decorators\TestDecoratableCommand.cs" />
-    <Compile Include="Decorators\TestDecoratableCommandHandler.cs" />
-    <Compile Include="Decorators\TestDecorator.cs" />
-    <Compile Include="Decorators\TestNotDecoratableCommand.cs" />
-    <Compile Include="Decorators\TestNotDecoratableCommandHandler.cs" />
+    <Compile Include="TestException.cs" />
+    <Compile Include="Commands\Async\Commands\ValidatableAsyncCommand.cs" />
+    <Compile Include="Commands\Async\Tests.cs" />
+    <Compile Include="Commands\Async\Commands\ResultAsyncCommand.cs" />
+    <Compile Include="Commands\Async\Commands\VoidAsyncCommand.cs" />
+    <Compile Include="Commands\Sync\Commands\ResultCommand.cs" />
+    <Compile Include="Commands\Sync\Commands\VoidCommand.cs" />
+    <Compile Include="Decorators\Async\Tests.cs" />
+    <Compile Include="Decorators\Async\Commands\IDecoratableAsyncCommand.cs" />
+    <Compile Include="Decorators\Async\Commands\TestDecoratableAsyncCommand.cs" />
+    <Compile Include="Decorators\Async\Commands\TestAsyncDecorator.cs" />
+    <Compile Include="Decorators\Async\Commands\TestNotDecoratableAsyncCommand.cs" />
+    <Compile Include="Decorators\Sync\Commands\IDecoratableCommand.cs" />
+    <Compile Include="Decorators\Sync\Commands\TestDecoratableCommand.cs" />
+    <Compile Include="Decorators\Sync\Commands\TestDecorator.cs" />
+    <Compile Include="Decorators\Sync\Commands\TestNotDecoratableCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queries\QueryTests.cs" />
-    <Compile Include="Commands\CommandTests.cs" />
-    <Compile Include="Decorators\DecoratorTests.cs" />
-    <Compile Include="Queries\TestQuery.cs" />
-    <Compile Include="Queries\TestQueryHandler.cs" />
-    <Compile Include="ValidatableCommands\TestCommand.cs" />
-    <Compile Include="ValidatableCommands\TestCommandHandler.cs" />
-    <Compile Include="ValidatableCommands\ValidatableCommandTests.cs" />
+    <Compile Include="Commands\Sync\Tests.cs" />
+    <Compile Include="Decorators\Sync\Tests.cs" />
+    <Compile Include="Commands\Sync\Commands\ValidatableCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Rocks.Commands.Tests.LibraryA\Rocks.Commands.Tests.LibraryA.csproj">
@@ -122,6 +114,14 @@
       <Project>{0C584954-F5AC-48F1-8BB1-7BA1978EB724}</Project>
       <Name>Rocks.Commands.Tests.LibraryD</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Rocks.Commands.Tests.LibraryE\Rocks.Commands.Tests.LibraryE.csproj">
+      <Project>{C7B8BA8F-EFF6-443E-9005-315B98731595}</Project>
+      <Name>Rocks.Commands.Tests.LibraryE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rocks.Commands.Tests.LibraryF\Rocks.Commands.Tests.LibraryF.csproj">
+      <Project>{88CD772C-8B5D-43A2-8039-64261EED929C}</Project>
+      <Name>Rocks.Commands.Tests.LibraryF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rocks.Commands\Rocks.Commands.csproj">
       <Project>{C3074363-2B05-49EF-9409-7AB9AAEB2C32}</Project>
       <Name>Rocks.Commands</Name>
@@ -131,6 +131,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

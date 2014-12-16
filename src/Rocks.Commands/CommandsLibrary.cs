@@ -125,7 +125,7 @@ namespace Rocks.Commands
 
 
 		/// <summary>
-		/// Throws <see cref="CommandHandlerNotFoundException" /> for any command found without appropriate command handler.
+		///     Throws <see cref="CommandHandlerNotFoundException" /> for any command found without appropriate command handler.
 		/// </summary>
 		/// <param name="container">Container with all registered command handlers.</param>
 		/// <param name="assemblies">Assemblies with commands to be checked.</param>
@@ -134,45 +134,16 @@ namespace Rocks.Commands
 			if (container == null)
 				throw new ArgumentNullException ("container");
 
-			var command_generic_type = typeof (ICommand<>);
-			var command_handler_generic_type = typeof (ICommandHandler<,>);
-			var registered_types = container.GetCurrentRegistrations ().Select (x => x.Registration.ImplementationType).ToList ();
-
-			var registered_command_handlers_types = new HashSet<Type>
-				(registered_types
-					 .Where (t => t.IsClass && !t.IsAbstract)
-					 .SelectMany (t => t.GetInterfaces ()
-					                    .Where (i => i.IsGenericType && i.GetGenericTypeDefinition () == command_handler_generic_type))
-					 .Distinct ());
-
-
-			foreach (var command_type in assemblies.SelectMany (a => a.GetTypes ().Where (x => x.IsClass && !x.IsAbstract))
-			                                       .Distinct ())
-			{
-				var command_interfaces = command_type.GetInterfaces ()
-				                                     .Where (i => i.IsGenericType && i.GetGenericTypeDefinition () == command_generic_type)
-				                                     .ToList ();
-
-				if (!command_interfaces.Any ())
-					continue;
-
-				foreach (var command_interface in command_interfaces)
-				{
-					var command_result_type = command_interface.GetGenericArguments ()[0];
-					var command_handler_type = command_handler_generic_type.MakeGenericType (command_type, command_result_type);
-
-					if (!registered_command_handlers_types.Contains (command_handler_type))
-						throw new CommandHandlerNotFoundException (command_type, command_result_type);
-				}
-			}
+			VerifyAllCommandsHasHandlersCore (container, assemblies, typeof (ICommandHandler<,>), typeof (ICommand<>));
+			VerifyAllCommandsHasHandlersCore (container, assemblies, typeof (IAsyncCommandHandler<,>), typeof (IAsyncCommand<>));
 		}
 
 
 		/// <summary>
-		///     Register command decorator.
+		///     Register commands decorator.
 		/// </summary>
 		/// <param name="decoratorType">
-		///     Decorator type. Can be open generic type, for example typeof (MyCommandDecorator&lt;,&gt;).
+		///     Decorator open generic type, for example: typeof (MyCommandDecorator&lt;,&gt;).
 		/// </param>
 		/// <param name="container">
 		///     Container that will be used for registration. If null <see cref="Container" /> will be used
@@ -198,6 +169,80 @@ namespace Rocks.Commands
 				throw new ArgumentNullException ("lifestyle", "Parameter 'lifestyle' is null and Setup method was not called before");
 
 			container.RegisterDecorator (typeof (ICommandHandler<,>), decoratorType, lifestyle);
+		}
+
+
+
+		/// <summary>
+		///     Register async commands decorator.
+		/// </summary>
+		/// <param name="decoratorType">
+		///     Decorator open generic type, for example: typeof (MyCommandDecorator&lt;,&gt;).
+		/// </param>
+		/// <param name="container">
+		///     Container that will be used for registration. If null <see cref="Container" /> will be used
+		///     (should be initialized with calling <see cref="Setup" /> method before).
+		/// </param>
+		/// <param name="lifestyle">
+		///     Lifestyle of the registered decorator.
+		///     Note that it change the lifestyle of all decorated commands.
+		///     If null then lifestyle passed to previous call to <see cref="Setup" /> method will be used.
+		/// </param>
+		public static void RegisterAsyncCommandsDecorator ([NotNull] Type decoratorType, Container container = null, Lifestyle lifestyle = null)
+		{
+			if (decoratorType == null)
+				throw new ArgumentNullException ("decoratorType");
+
+			container = container ?? Container;
+			lifestyle = lifestyle ?? defaultLifestyle;
+
+			if (container == null)
+				throw new ArgumentNullException ("container", "Parameter 'container' is null and Setup method was not called before");
+
+			if (lifestyle == null)
+				throw new ArgumentNullException ("lifestyle", "Parameter 'lifestyle' is null and Setup method was not called before");
+
+			container.RegisterDecorator (typeof (IAsyncCommandHandler<,>), decoratorType, lifestyle);
+		}
+
+		#endregion
+
+		#region Private methods
+
+		private static void VerifyAllCommandsHasHandlersCore (Container container,
+		                                                      IEnumerable<Assembly> assemblies,
+		                                                      Type commandHandlerGenericType,
+		                                                      Type commandGenericType)
+		{
+			var registered_types = container.GetCurrentRegistrations ().Select (x => x.Registration.ImplementationType).ToList ();
+
+			var registered_command_handlers_types = new HashSet<Type>
+				(registered_types
+					 .Where (t => t.IsClass && !t.IsAbstract)
+					 .SelectMany (t => t.GetInterfaces ()
+					                    .Where (i => i.IsGenericType && i.GetGenericTypeDefinition () == commandHandlerGenericType))
+					 .Distinct ());
+
+
+			foreach (var command_type in assemblies.SelectMany (a => a.GetTypes ().Where (x => x.IsClass && !x.IsAbstract))
+			                                       .Distinct ())
+			{
+				var command_interfaces = command_type.GetInterfaces ()
+				                                     .Where (i => i.IsGenericType && i.GetGenericTypeDefinition () == commandGenericType)
+				                                     .ToList ();
+
+				if (!command_interfaces.Any ())
+					continue;
+
+				foreach (var command_interface in command_interfaces)
+				{
+					var command_result_type = command_interface.GetGenericArguments ()[0];
+					var command_handler_type = commandHandlerGenericType.MakeGenericType (command_type, command_result_type);
+
+					if (!registered_command_handlers_types.Contains (command_handler_type))
+						throw new CommandHandlerNotFoundException (command_type, command_result_type);
+				}
+			}
 		}
 
 		#endregion

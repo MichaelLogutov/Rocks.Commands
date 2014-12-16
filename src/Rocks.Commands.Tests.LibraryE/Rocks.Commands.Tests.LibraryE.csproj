@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{338B0D54-C485-4B04-9E22-F6B32267FC76}</ProjectGuid>
+    <ProjectGuid>{C7B8BA8F-EFF6-443E-9005-315B98731595}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rocks.Commands.Tests.LibraryA</RootNamespace>
-    <AssemblyName>Rocks.Commands.Tests.LibraryA</AssemblyName>
+    <RootNamespace>Rocks.Commands.Tests.LibraryE</RootNamespace>
+    <AssemblyName>Rocks.Commands.Tests.LibraryE</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,10 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrossLibraryTestAsyncCommand.cs" />
-    <Compile Include="CrossLibraryTestCommand.cs" />
-    <Compile Include="ILibraryA.cs" />
+    <Compile Include="ILibraryE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestAsyncCommandWithPartialHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Rocks.Commands\Rocks.Commands.csproj">
