@@ -56,7 +56,7 @@ namespace Rocks.Commands.Implementation
 		{
 			Validate (command);
 
-			var handler = this.GetHandlerForArbitraryCommand (command);
+			var handler = this.GetHandlerForArbitraryCommand (command.GetType ());
 
 			return handler.Execute ((dynamic) command);
 		}
@@ -90,7 +90,7 @@ namespace Rocks.Commands.Implementation
 		{
 			Validate (command);
 
-			var handler = this.GetHandlerForArbitraryCommand (command);
+			var handler = this.GetAsyncHandlerForArbitraryCommand (command.GetType ());
 
 			return await handler.ExecuteAsync ((dynamic) command, cancellationToken)
 			                    .ConfigureAwait (false);
@@ -98,42 +98,28 @@ namespace Rocks.Commands.Implementation
 
 
 		/// <summary>
-		///     Returns the list of <see cref="IDecorator{TCommand,TResult}" /> decorators instances
+		///     Returns the list of <see cref="IDecorator" /> decorators instances
 		///     that registered for a given command.
 		/// </summary>
-		public IList<IDecorator<TCommand, TResult>> GetAllDecorators<TCommand, TResult> () where TCommand : ICommand<TResult>
+		public IList<IDecorator> GetAllDecorators<TCommand> () where TCommand : ICommand
 		{
-			var result = new List<IDecorator<TCommand, TResult>> ();
+			var handler = this.GetHandlerForArbitraryCommand (typeof (TCommand));
 
-			var handler = this.GetHandler (typeof (ICommandHandler<,>), typeof (TCommand), typeof (TResult));
-
-			var decorator = handler as IDecorator<TCommand, TResult>;
-			while (decorator != null)
-			{
-				result.Add (decorator);
-				decorator = decorator.Decorated as IDecorator<TCommand, TResult>;
-			}
+			var result = GetDecoratorsList (handler);
 
 			return result;
 		}
 
 
 		/// <summary>
-		///     Returns the list of <see cref="IAsyncDecorator{TCommand,TResult}" /> async decorators instances
+		///     Returns the list of <see cref="IDecorator" /> decorators instances
 		///     that registered for a given command.
 		/// </summary>
-		public IList<IAsyncDecorator<TCommand, TResult>> GetAllAsyncDecorators<TCommand, TResult> () where TCommand : IAsyncCommand<TResult>
+		public IList<IDecorator> GetAllAsyncDecorators<TCommand> () where TCommand : IAsyncCommand
 		{
-			var result = new List<IAsyncDecorator<TCommand, TResult>> ();
+			var handler = this.GetAsyncHandlerForArbitraryCommand (typeof (TCommand));
 
-			var handler = this.GetHandler (typeof (IAsyncCommandHandler<,>), typeof (TCommand), typeof (TResult));
-
-			var decorator = handler as IAsyncDecorator<TCommand, TResult>;
-			while (decorator != null)
-			{
-				result.Add (decorator);
-				decorator = decorator.Decorated as IAsyncDecorator<TCommand, TResult>;
-			}
+			var result = GetDecoratorsList (handler);
 
 			return result;
 		}
@@ -163,9 +149,9 @@ namespace Rocks.Commands.Implementation
 		}
 
 
-		private dynamic GetHandlerForArbitraryCommand (ICommand command)
+		private dynamic GetHandlerForArbitraryCommand (Type commandType)
 		{
-			var type = GetCommandHandlerType (command, typeof (ICommand<>), typeof (ICommandHandler<,>));
+			var type = GetCommandHandlerType (commandType, typeof (ICommand<>), typeof (ICommandHandler<,>));
 
 			dynamic handler = this.commandHandlerFactory.GetCommandHandler (type);
 
@@ -173,9 +159,9 @@ namespace Rocks.Commands.Implementation
 		}
 
 
-		private dynamic GetHandlerForArbitraryCommand (IAsyncCommand command)
+		private dynamic GetAsyncHandlerForArbitraryCommand (Type commandType)
 		{
-			var type = GetCommandHandlerType (command, typeof (IAsyncCommand<>), typeof (IAsyncCommandHandler<,>));
+			var type = GetCommandHandlerType (commandType, typeof (IAsyncCommand<>), typeof (IAsyncCommandHandler<,>));
 
 			dynamic handler = this.commandHandlerFactory.GetCommandHandler (type);
 
@@ -183,20 +169,33 @@ namespace Rocks.Commands.Implementation
 		}
 
 
-		private static Type GetCommandHandlerType (object command, Type commandOpenGenericType, Type commandHandlerOpenGenericType)
+		private static Type GetCommandHandlerType (Type commandType, Type commandOpenGenericType, Type commandHandlerOpenGenericType)
 		{
-			var command_type = command.GetType ();
-
-			var command_generic_type = command_type.GetInterfaces ()
-			                                       .FirstOrDefault (i => i.IsGenericType &&
-			                                                             i.GetGenericTypeDefinition () == commandOpenGenericType);
+			var command_generic_type = commandType.GetInterfaces ()
+			                                      .FirstOrDefault (i => i.IsGenericType &&
+			                                                            i.GetGenericTypeDefinition () == commandOpenGenericType);
 
 			if (command_generic_type == null)
-				throw new InvalidOperationException (string.Format ("The command {0} does not implements {1}.", command_type, commandOpenGenericType));
+				throw new InvalidOperationException (string.Format ("The command {0} does not implements {1}.", commandType, commandOpenGenericType));
 
-			var type = commandHandlerOpenGenericType.MakeGenericType (command_type, command_generic_type.GenericTypeArguments[0]);
+			var type = commandHandlerOpenGenericType.MakeGenericType (commandType, command_generic_type.GenericTypeArguments[0]);
 
 			return type;
+		}
+
+
+		private static List<IDecorator> GetDecoratorsList (object handler)
+		{
+			var result = new List<IDecorator> ();
+
+			var decorator = handler as IDecorator;
+			while (decorator != null)
+			{
+				result.Add (decorator);
+				decorator = decorator.Decorated as IDecorator;
+			}
+
+			return result;
 		}
 
 		#endregion

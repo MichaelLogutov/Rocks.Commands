@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Rocks.Commands.Tests.Decorators.Async.Commands
 {
 	internal class TestAsyncDecorator<TCommand, TResult> : IAsyncCommandHandler<TCommand, TResult>,
-	                                                       IAsyncDecorator<TCommand, TResult>
+	                                                       IDecorator
 		where TCommand : IAsyncCommand<TResult>, IDecoratableAsyncCommand
 	{
 		private readonly IAsyncCommandHandler<TCommand, TResult> decorated;
@@ -26,6 +26,6 @@ namespace Rocks.Commands.Tests.Decorators.Async.Commands
 		}
 
 
-		IAsyncCommandHandler<TCommand, TResult> IAsyncDecorator<TCommand, TResult>.Decorated { get { return this.decorated; } }
+		public object Decorated { get { return this.decorated; } }
 	}
 }

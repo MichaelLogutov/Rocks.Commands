@@ -64,7 +64,6 @@
     <Compile Include="Extensions\DecoratorsExtensions.cs" />
     <Compile Include="IAsyncCommandHandler.cs" />
     <Compile Include="IAsyncCommand.cs" />
-    <Compile Include="IAsyncDecorator.cs" />
     <Compile Include="IDecorator.cs" />
     <Compile Include="Implementation\CommandsProcessor.cs" />
     <Compile Include="ICommand.cs" />

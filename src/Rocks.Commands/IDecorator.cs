@@ -1,13 +1,13 @@
 ﻿namespace Rocks.Commands
 {
 	/// <summary>
-	///     Represents a command decorator.
+	///     Represents an arbitrary decorator.
 	/// </summary>
-	public interface IDecorator<in TCommand, out TResult> where TCommand : ICommand<TResult>
+	public interface IDecorator
 	{
 		/// <summary>
-		///     A decorated command handler.
+		///     A decorated object.
 		/// </summary>
-		ICommandHandler<TCommand, TResult> Decorated { get; }
+		object Decorated { get; }
 	}
 }

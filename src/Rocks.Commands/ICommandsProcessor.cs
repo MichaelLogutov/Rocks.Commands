@@ -51,18 +51,18 @@ namespace Rocks.Commands
 
 
 		/// <summary>
-		///     Returns the list of <see cref="IDecorator{TCommand,TResult}" /> decorators instances
+		///     Returns the list of <see cref="IDecorator" /> decorators instances
 		///     that registered for a given command.
 		/// </summary>
 		[DebuggerStepThrough, NotNull]
-		IList<IDecorator<TCommand, TResult>> GetAllDecorators<TCommand, TResult> () where TCommand : ICommand<TResult>;
+		IList<IDecorator> GetAllDecorators<TCommand> () where TCommand : ICommand;
 
 
 		/// <summary>
-		///     Returns the list of <see cref="IAsyncDecorator{TCommand,TResult}" /> async decorators instances
+		///     Returns the list of <see cref="IDecorator" /> decorators instances
 		///     that registered for a given command.
 		/// </summary>
 		[DebuggerStepThrough, NotNull]
-		IList<IAsyncDecorator<TCommand, TResult>> GetAllAsyncDecorators<TCommand, TResult> () where TCommand : IAsyncCommand<TResult>;
+		IList<IDecorator> GetAllAsyncDecorators<TCommand> () where TCommand : IAsyncCommand;
 	}
 }

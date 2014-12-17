@@ -59,7 +59,7 @@ namespace Rocks.Commands.Tests.Decorators.Async
 
 
 			// act
-			var result = CommandsLibrary.CommandsProcessor.GetAllAsyncDecorators<TestDecoratableAsyncCommand, int> ();
+			var result = CommandsLibrary.CommandsProcessor.GetAllAsyncDecorators<TestDecoratableAsyncCommand> ();
 
 
 			// assert
@@ -76,7 +76,7 @@ namespace Rocks.Commands.Tests.Decorators.Async
 
 
 			// act
-			var result = CommandsLibrary.CommandsProcessor.GetAllAsyncDecoratorsGenericTypes<TestDecoratableAsyncCommand, int> ();
+			var result = CommandsLibrary.CommandsProcessor.GetAllAsyncDecoratorsGenericTypes<TestDecoratableAsyncCommand> ();
 
 
 			// assert

@@ -58,7 +58,7 @@ namespace Rocks.Commands.Tests.Decorators.Sync
 
 
 			// act
-			var result = CommandsLibrary.CommandsProcessor.GetAllDecorators<TestDecoratableCommand, int> ();
+			var result = CommandsLibrary.CommandsProcessor.GetAllDecorators<TestDecoratableCommand> ();
 
 
 			// assert
@@ -75,7 +75,7 @@ namespace Rocks.Commands.Tests.Decorators.Sync
 
 
 			// act
-			var result = CommandsLibrary.CommandsProcessor.GetAllDecoratorsGenericTypes<TestDecoratableCommand, int> ();
+			var result = CommandsLibrary.CommandsProcessor.GetAllDecoratorsGenericTypes<TestDecoratableCommand> ();
 
 
 			// assert
