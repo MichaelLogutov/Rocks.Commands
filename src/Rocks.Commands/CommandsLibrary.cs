@@ -154,7 +154,13 @@ namespace Rocks.Commands
 		///     Note that it change the lifestyle of all decorated commands.
 		///     If null then lifestyle passed to previous call to <see cref="Setup" /> method will be used.
 		/// </param>
-		public static void RegisterCommandsDecorator ([NotNull] Type decoratorType, Container container = null, Lifestyle lifestyle = null)
+		/// <param name="predicate">
+		///     An optional predicate to filter out decorators.
+		/// </param>
+		public static void RegisterCommandsDecorator ([NotNull] Type decoratorType,
+		                                              Container container = null,
+		                                              Lifestyle lifestyle = null,
+		                                              Predicate<DecoratorPredicateContext> predicate = null)
 		{
 			if (decoratorType == null)
 				throw new ArgumentNullException ("decoratorType");
@@ -168,7 +174,10 @@ namespace Rocks.Commands
 			if (lifestyle == null)
 				throw new ArgumentNullException ("lifestyle", "Parameter 'lifestyle' is null and Setup method was not called before");
 
-			container.RegisterDecorator (typeof (ICommandHandler<,>), decoratorType, lifestyle);
+			if (predicate != null)
+				container.RegisterDecorator (typeof (ICommandHandler<,>), decoratorType, lifestyle, predicate);
+			else
+				container.RegisterDecorator (typeof (ICommandHandler<,>), decoratorType, lifestyle);
 		}
 
 
@@ -188,7 +197,13 @@ namespace Rocks.Commands
 		///     Note that it change the lifestyle of all decorated commands.
 		///     If null then lifestyle passed to previous call to <see cref="Setup" /> method will be used.
 		/// </param>
-		public static void RegisterAsyncCommandsDecorator ([NotNull] Type decoratorType, Container container = null, Lifestyle lifestyle = null)
+		/// <param name="predicate">
+		///     An optional predicate to filter out decorators.
+		/// </param>
+		public static void RegisterAsyncCommandsDecorator ([NotNull] Type decoratorType,
+		                                                   Container container = null,
+		                                                   Lifestyle lifestyle = null,
+		                                                   Predicate<DecoratorPredicateContext> predicate = null)
 		{
 			if (decoratorType == null)
 				throw new ArgumentNullException ("decoratorType");
@@ -202,7 +217,10 @@ namespace Rocks.Commands
 			if (lifestyle == null)
 				throw new ArgumentNullException ("lifestyle", "Parameter 'lifestyle' is null and Setup method was not called before");
 
-			container.RegisterDecorator (typeof (IAsyncCommandHandler<,>), decoratorType, lifestyle);
+			if (predicate != null)
+				container.RegisterDecorator (typeof (IAsyncCommandHandler<,>), decoratorType, lifestyle, predicate);
+			else
+				container.RegisterDecorator (typeof (IAsyncCommandHandler<,>), decoratorType, lifestyle);
 		}
 
 		#endregion
