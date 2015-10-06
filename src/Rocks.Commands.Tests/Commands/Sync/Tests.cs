@@ -1,6 +1,6 @@
 ﻿using System;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Rocks.Commands.Exceptions;
 using Rocks.Commands.Tests.Commands.Sync.Commands;
 using Rocks.Commands.Tests.LibraryA;
@@ -10,10 +10,9 @@ using Rocks.Commands.Tests.LibraryD;
 
 namespace Rocks.Commands.Tests.Commands.Sync
 {
-	[TestClass]
 	public class Tests
 	{
-		[TestMethod]
+		[Fact]
 		public void Execute_ResultCommand_Executes ()
 		{
 			// arrange
@@ -32,7 +31,7 @@ namespace Rocks.Commands.Tests.Commands.Sync
 		}
 
 
-		[TestMethod]
+		[Fact]
 		public void Execute_ArbitraryCommand_Always_Executes ()
 		{
 			// arrange
@@ -51,7 +50,7 @@ namespace Rocks.Commands.Tests.Commands.Sync
 		}
 
 
-		[TestMethod]
+		[Fact]
 		public void Execute_CommandAndHandlerInDifferentLibraries_Executes ()
 		{
 			// arrange
@@ -70,7 +69,7 @@ namespace Rocks.Commands.Tests.Commands.Sync
 		}
 
 
-		[TestMethod]
+		[Fact]
 		public void Setup_CommandWithoutHandler_Throws ()
 		{
 			// arrange
@@ -93,7 +92,7 @@ namespace Rocks.Commands.Tests.Commands.Sync
 		}
 
 
-		[TestMethod]
+		[Fact]
 		public void Setup_CommandWithPartialHandler_Throws ()
 		{
 			// arrange
@@ -116,7 +115,7 @@ namespace Rocks.Commands.Tests.Commands.Sync
 		}
 
 
-		[TestMethod]
+		[Fact]
 		public void ValidatableCommand_CallsValidateBeforeExecuting ()
 		{
 			// arrange
@@ -135,3 +134,5 @@ namespace Rocks.Commands.Tests.Commands.Sync
 		}
 	}
 }
+
+

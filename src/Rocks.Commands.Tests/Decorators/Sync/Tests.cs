@@ -1,85 +1,117 @@
 ﻿using System;
-using System.Linq;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rocks.Commands.Extensions;
 using Rocks.Commands.Tests.Decorators.Sync.Commands;
+using SimpleInjector;
+using Xunit;
 
 namespace Rocks.Commands.Tests.Decorators.Sync
 {
-	[TestClass]
-	public class Tests
-	{
-		[TestMethod]
-		public void RegisterCommandsDecorator_Always_RegistersAndUsesOpenGenericDecorators ()
-		{
-			// arrange
-			CommandsLibrary.Setup ();
-			CommandsLibrary.RegisterCommandsDecorator (typeof (TestDecorator<,>));
+    public class Tests
+    {
+        [Fact]
+        public void RegisterCommandsDecorator_Always_RegistersAndUsesOpenGenericDecorators ()
+        {
+            // arrange
+            var container = new Container { Options = { AllowOverridingRegistrations = true } };
+            var lifestyle = Lifestyle.Transient;
 
-			var command = new TestDecoratableCommand { Number = 1 };
+            CommandsLibrary.Setup (container, lifestyle);
+            CommandsLibrary.RegisterCommandsDecorator (typeof (TestDecorator<,>), container, lifestyle);
 
-
-			// act
-			var result = CommandsLibrary.CommandsProcessor.Execute (command);
+            var command = new TestDecoratableCommand { Number = 1 };
 
 
-			// assert
-			command.Number.Should ().Be (3);
-			result.Should ().Be (2);
-		}
+            // act
+            var result = CommandsLibrary.CommandsProcessor.Execute (command);
 
 
-		[TestMethod]
-		public void RegisterCommandsDecorator_DoesNotAppliesDecoratorToNotApplicableCommands ()
-		{
-			// arrange
-			CommandsLibrary.Setup ();
-			CommandsLibrary.RegisterCommandsDecorator (typeof (TestDecorator<,>));
-
-			var command = new TestNotDecoratableCommand { Number = 1 };
+            // assert
+            command.Number.Should ().Be (3);
+            result.Should ().Be (2);
+        }
 
 
-			// act
-			var result = CommandsLibrary.CommandsProcessor.Execute (command);
+        [Fact]
+        public void RegisterCommandsDecorator_DoesNotAppliesDecoratorToNotApplicableCommands ()
+        {
+            // arrange
+            var container = new Container { Options = { AllowOverridingRegistrations = true } };
+            var lifestyle = Lifestyle.Transient;
+
+            CommandsLibrary.Setup (container, lifestyle);
+            CommandsLibrary.RegisterCommandsDecorator (typeof (TestDecorator<,>), container, lifestyle);
+
+            var command = new TestNotDecoratableCommand { Number = 1 };
 
 
-			// assert
-			command.Number.Should ().Be (2);
-			result.Should ().Be (2);
-		}
+            // act
+            var result = CommandsLibrary.CommandsProcessor.Execute (command);
 
 
-		[TestMethod]
-		public void GetAllDecorators_NoDecorators_ReturnsNothing ()
-		{
-			// arrange
-			CommandsLibrary.Setup ();
+            // assert
+            command.Number.Should ().Be (2);
+            result.Should ().Be (2);
+        }
 
 
-			// act
-			var result = CommandsLibrary.CommandsProcessor.GetAllDecorators<TestDecoratableCommand> ();
+        [Fact]
+        public void RegisterCommandsDecorator_TwoRegistrations_Verifies ()
+        {
+            // arrange
+            var container = new Container { Options = { AllowOverridingRegistrations = true } };
+            var lifestyle = Lifestyle.Transient;
+
+            CommandsLibrary.Setup (container, lifestyle);
+            CommandsLibrary.RegisterCommandsDecorator (typeof (TestDecorator<,>), container, lifestyle);
+            CommandsLibrary.RegisterCommandsDecorator (typeof (TestDecorator<,>), container, lifestyle);
 
 
-			// assert
-			result.Should ().BeEmpty ();
-		}
+            // act
+            Action act = () => container.Verify ();
 
 
-		[TestMethod]
-		public void GetAllDecoratorsGenericTypes_OneDecorator_ReturnsIt ()
-		{
-			// arrange
-			CommandsLibrary.Setup ();
-			CommandsLibrary.RegisterCommandsDecorator (typeof (TestDecorator<,>));
+            // assert
+            act.ShouldNotThrow ();
+        }
 
 
-			// act
-			var result = CommandsLibrary.CommandsProcessor.GetAllDecoratorsGenericTypes<TestDecoratableCommand> ();
+        [Fact]
+        public void GetAllDecorators_NoDecorators_ReturnsNothing ()
+        {
+            // arrange
+            var container = new Container { Options = { AllowOverridingRegistrations = true } };
+            var lifestyle = Lifestyle.Transient;
+
+            CommandsLibrary.Setup (container, lifestyle);
 
 
-			// assert
-			result.Should ().Equal (typeof (TestDecorator<,>));
-		}
-	}
+            // act
+            var result = CommandsLibrary.CommandsProcessor.GetAllDecorators<TestDecoratableCommand> ();
+
+
+            // assert
+            result.Should ().BeEmpty ();
+        }
+
+
+        [Fact]
+        public void GetAllDecoratorsGenericTypes_OneDecorator_ReturnsIt ()
+        {
+            // arrange
+            var container = new Container { Options = { AllowOverridingRegistrations = true } };
+            var lifestyle = Lifestyle.Transient;
+
+            CommandsLibrary.Setup (container, lifestyle);
+            CommandsLibrary.RegisterCommandsDecorator (typeof (TestDecorator<,>), container, lifestyle);
+
+
+            // act
+            var result = CommandsLibrary.CommandsProcessor.GetAllDecoratorsGenericTypes<TestDecoratableCommand> ();
+
+
+            // assert
+            result.Should ().Equal (typeof (TestDecorator<,>));
+        }
+    }
 }

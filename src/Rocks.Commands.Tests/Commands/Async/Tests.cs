@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Rocks.Commands.Exceptions;
 using Rocks.Commands.Tests.Commands.Async.Commands;
 using Rocks.Commands.Tests.LibraryA;
@@ -11,10 +11,9 @@ using Rocks.Commands.Tests.LibraryF;
 
 namespace Rocks.Commands.Tests.Commands.Async
 {
-	[TestClass]
 	public class Tests
 	{
-		[TestMethod]
+		[Fact]
 		public async Task ExecuteAsync_ResultCommand_Executes ()
 		{
 			// arrange
@@ -33,7 +32,7 @@ namespace Rocks.Commands.Tests.Commands.Async
 		}
 
 
-		[TestMethod]
+		[Fact]
 		public async Task ExecuteAsync_ArbitraryCommand_Always_Executes ()
 		{
 			// arrange
@@ -52,7 +51,7 @@ namespace Rocks.Commands.Tests.Commands.Async
 		}
 
 
-		[TestMethod]
+		[Fact]
 		public async Task ExecuteAsync_CommandAndHandlerInDifferentLibraries_Executes ()
 		{
 			// arrange
@@ -71,7 +70,7 @@ namespace Rocks.Commands.Tests.Commands.Async
 		}
 
 
-		[TestMethod]
+		[Fact]
 		public void Setup_CommandWithoutHandler_Throws ()
 		{
 			// arrange
@@ -94,7 +93,7 @@ namespace Rocks.Commands.Tests.Commands.Async
 		}
 
 
-		[TestMethod]
+		[Fact]
 		public void Setup_CommandWithPartialHandler_Throws ()
 		{
 			// arrange
@@ -117,7 +116,7 @@ namespace Rocks.Commands.Tests.Commands.Async
 		}
 
 
-		[TestMethod]
+		[Fact]
 		public void ValidatableCommand_CallsValidateBeforeExecuting ()
 		{
 			// arrange
@@ -136,3 +135,5 @@ namespace Rocks.Commands.Tests.Commands.Async
 		}
 	}
 }
+
+
