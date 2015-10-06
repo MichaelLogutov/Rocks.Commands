@@ -78,6 +78,27 @@ namespace Rocks.Commands.Tests.Decorators.Async
 
 
         [Fact]
+        public void RegisterCommandsDecorator_TwoRegistrations_Singleton_Verifies ()
+        {
+            // arrange
+            var container = new Container { Options = { AllowOverridingRegistrations = true } };
+            var lifestyle = Lifestyle.Transient;
+
+            CommandsLibrary.Setup (container, lifestyle);
+            CommandsLibrary.RegisterAsyncCommandsDecorator (typeof (TestSingletonAsyncDecorator<,>), container, Lifestyle.Singleton);
+            CommandsLibrary.RegisterAsyncCommandsDecorator (typeof (TestSingletonAsyncDecorator<,>), container, Lifestyle.Singleton);
+
+
+            // act
+            Action act = () => container.Verify ();
+
+
+            // assert
+            act.ShouldNotThrow ();
+        }
+
+
+        [Fact]
         public void GetAllDecorators_NoDecorators_ReturnsNothing ()
         {
             // arrange

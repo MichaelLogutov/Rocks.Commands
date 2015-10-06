@@ -77,6 +77,27 @@ namespace Rocks.Commands.Tests.Decorators.Sync
 
 
         [Fact]
+        public void RegisterCommandsDecorator_TwoRegistrations_Singleton_Verifies ()
+        {
+            // arrange
+            var container = new Container { Options = { AllowOverridingRegistrations = true } };
+            var lifestyle = Lifestyle.Transient;
+
+            CommandsLibrary.Setup (container, lifestyle);
+            CommandsLibrary.RegisterCommandsDecorator (typeof (TestSingletonDecorator<,>), container, Lifestyle.Singleton);
+            CommandsLibrary.RegisterCommandsDecorator (typeof (TestSingletonDecorator<,>), container, Lifestyle.Singleton);
+
+
+            // act
+            Action act = () => container.Verify ();
+
+
+            // assert
+            act.ShouldNotThrow ();
+        }
+
+
+        [Fact]
         public void GetAllDecorators_NoDecorators_ReturnsNothing ()
         {
             // arrange
