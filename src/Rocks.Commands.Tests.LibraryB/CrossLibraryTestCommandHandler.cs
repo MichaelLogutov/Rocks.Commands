@@ -1,5 +1,4 @@
-﻿using System;
-using Rocks.Commands.Tests.LibraryA;
+﻿using Rocks.Commands.Tests.LibraryA;
 
 namespace Rocks.Commands.Tests.LibraryB
 {

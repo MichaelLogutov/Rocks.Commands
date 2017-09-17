@@ -1,175 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\xunit.core.2.1.0\build\portable-net45+win8+wp8+wpa81\xunit.core.props" Condition="Exists('..\packages\xunit.core.2.1.0\build\portable-net45+win8+wp8+wpa81\xunit.core.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{77D14F7F-F787-4E32-9DFD-2667EDF0BF18}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rocks.Commands.Tests</RootNamespace>
-    <AssemblyName>Rocks.Commands.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
-    <IsCodedUITest>False</IsCodedUITest>
-    <TestProjectType>UnitTest</TestProjectType>
-    <TargetFrameworkProfile />
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="FluentAssertions, Version=4.19.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.4.19.2\lib\net45\FluentAssertions.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentAssertions.Core, Version=4.19.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.4.19.2\lib\net45\FluentAssertions.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="JetBrains.Annotations, Version=10.4.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\packages\JetBrains.Annotations.10.4.0\lib\net\JetBrains.Annotations.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleInjector, Version=4.0.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\packages\SimpleInjector.4.0.0\lib\net45\SimpleInjector.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.abstractions.2.0.1\lib\net35\xunit.abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.assert, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.assert.2.2.0\lib\netstandard1.1\xunit.assert.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.core, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.core.2.2.0\lib\netstandard1.1\xunit.core.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.execution.dotnet, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.execution.2.2.0\lib\netstandard1.1\xunit.execution.dotnet.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <Choose>
-    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-      </ItemGroup>
-    </When>
-    <Otherwise />
-  </Choose>
-  <ItemGroup>
-    <Compile Include="Decorators\Async\Commands\TestSingletonAsyncDecorator.cs" />
-    <Compile Include="Decorators\Sync\Commands\TestSingletonDecorator.cs" />
-    <Compile Include="TestException.cs" />
-    <Compile Include="Commands\Async\Commands\ValidatableAsyncCommand.cs" />
-    <Compile Include="Commands\Async\Tests.cs" />
-    <Compile Include="Commands\Async\Commands\ResultAsyncCommand.cs" />
-    <Compile Include="Commands\Async\Commands\VoidAsyncCommand.cs" />
-    <Compile Include="Commands\Sync\Commands\ResultCommand.cs" />
-    <Compile Include="Commands\Sync\Commands\VoidCommand.cs" />
-    <Compile Include="Decorators\Async\Tests.cs" />
-    <Compile Include="Decorators\Async\Commands\IDecoratableAsyncCommand.cs" />
-    <Compile Include="Decorators\Async\Commands\TestDecoratableAsyncCommand.cs" />
-    <Compile Include="Decorators\Async\Commands\TestAsyncDecorator.cs" />
-    <Compile Include="Decorators\Async\Commands\TestNotDecoratableAsyncCommand.cs" />
-    <Compile Include="Decorators\Sync\Commands\IDecoratableCommand.cs" />
-    <Compile Include="Decorators\Sync\Commands\TestDecoratableCommand.cs" />
-    <Compile Include="Decorators\Sync\Commands\TestDecorator.cs" />
-    <Compile Include="Decorators\Sync\Commands\TestNotDecoratableCommand.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Commands\Sync\Tests.cs" />
-    <Compile Include="Decorators\Sync\Tests.cs" />
-    <Compile Include="Commands\Sync\Commands\ValidatableCommand.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Rocks.Commands.Tests.LibraryA\Rocks.Commands.Tests.LibraryA.csproj">
-      <Project>{338B0D54-C485-4B04-9E22-F6B32267FC76}</Project>
-      <Name>Rocks.Commands.Tests.LibraryA</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rocks.Commands.Tests.LibraryB\Rocks.Commands.Tests.LibraryB.csproj">
-      <Project>{DD7A7519-6F41-40C2-99DE-6B386A8AFA11}</Project>
-      <Name>Rocks.Commands.Tests.LibraryB</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rocks.Commands.Tests.LibraryC\Rocks.Commands.Tests.LibraryC.csproj">
-      <Project>{62907738-0F50-4EEF-91D8-8C9CAC7D26CC}</Project>
-      <Name>Rocks.Commands.Tests.LibraryC</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rocks.Commands.Tests.LibraryD\Rocks.Commands.Tests.LibraryD.csproj">
-      <Project>{0C584954-F5AC-48F1-8BB1-7BA1978EB724}</Project>
-      <Name>Rocks.Commands.Tests.LibraryD</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rocks.Commands.Tests.LibraryE\Rocks.Commands.Tests.LibraryE.csproj">
-      <Project>{C7B8BA8F-EFF6-443E-9005-315B98731595}</Project>
-      <Name>Rocks.Commands.Tests.LibraryE</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rocks.Commands.Tests.LibraryF\Rocks.Commands.Tests.LibraryF.csproj">
-      <Project>{88CD772C-8B5D-43A2-8039-64261EED929C}</Project>
-      <Name>Rocks.Commands.Tests.LibraryF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rocks.Commands\Rocks.Commands.csproj">
-      <Project>{C3074363-2B05-49EF-9409-7AB9AAEB2C32}</Project>
-      <Name>Rocks.Commands</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
-  <Choose>
-    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <!-- Properties -->
+    <PropertyGroup>
+        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user
+        </DefaultItemExcludes>
+        <TargetFramework>netcoreapp2.0</TargetFramework>
+    </PropertyGroup>
+    <!-- Properties for NuGet package -->
+    <PropertyGroup>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+    <!-- NuGet packages -->
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0"/>
+        <PackageReference Include="xunit" Version="2.2.0"/>
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0"/>
+        <PackageReference Include="FluentAssertions" Version="4.19.4"/>
+    </ItemGroup>
+    <!-- Projects -->
+    <ItemGroup>
+        <ProjectReference Include="..\Rocks.Commands\Rocks.Commands.csproj"/>
+        <ProjectReference Include="..\Rocks.Commands.Tests.LibraryA\Rocks.Commands.Tests.LibraryA.csproj"/>
+        <ProjectReference Include="..\Rocks.Commands.Tests.LibraryB\Rocks.Commands.Tests.LibraryB.csproj"/>
+        <ProjectReference Include="..\Rocks.Commands.Tests.LibraryC\Rocks.Commands.Tests.LibraryC.csproj"/>
+        <ProjectReference Include="..\Rocks.Commands.Tests.LibraryD\Rocks.Commands.Tests.LibraryD.csproj"/>
+        <ProjectReference Include="..\Rocks.Commands.Tests.LibraryE\Rocks.Commands.Tests.LibraryE.csproj"/>
+        <ProjectReference Include="..\Rocks.Commands.Tests.LibraryF\Rocks.Commands.Tests.LibraryF.csproj"/>
+    </ItemGroup>
 </Project>
