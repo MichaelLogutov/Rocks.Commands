@@ -1,87 +1,30 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C3074363-2B05-49EF-9409-7AB9AAEB2C32}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rocks.Commands</RootNamespace>
-    <AssemblyName>Rocks.Commands</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Debug\Rocks.Commands.XML</DocumentationFile>
-    <NoWarn>1574, 1591, 0419</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Release\Rocks.Commands.XML</DocumentationFile>
-    <NoWarn>1574, 1591, 419</NoWarn>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="JetBrains.Annotations, Version=10.4.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\packages\JetBrains.Annotations.10.4.0\lib\net\JetBrains.Annotations.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleInjector, Version=4.0.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\packages\SimpleInjector.4.0.0\lib\net45\SimpleInjector.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Exceptions\CommandException.cs" />
-    <Compile Include="Exceptions\CommandHandlerNotFoundException.cs" />
-    <Compile Include="CommandsLibrary.cs" />
-    <Compile Include="Extensions\DecoratorsExtensions.cs" />
-    <Compile Include="IAsyncCommandHandler.cs" />
-    <Compile Include="IAsyncCommand.cs" />
-    <Compile Include="IDecorator.cs" />
-    <Compile Include="Implementation\CommandsProcessor.cs" />
-    <Compile Include="ICommand.cs" />
-    <Compile Include="ICommandHandlerFactory.cs" />
-    <Compile Include="ICommandHandler.cs" />
-    <Compile Include="ICommandsProcessor.cs" />
-    <Compile Include="IValidatableCommand.cs" />
-    <Compile Include="Void.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Implementation\SimpleInjectorCommandHandlerFactory.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Package.nuspec" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <!-- Properties -->
+    <PropertyGroup>
+        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user
+        </DefaultItemExcludes>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <Version>4.0.0</Version>
+        <FileVersion>$(Version)</FileVersion>
+        <AssemblyVersion>$(Version)</AssemblyVersion>
+        <Authors>Michael Logutov</Authors>
+        <Company>Michael Logutov</Company>
+        <Description>An implementation of the command/query pattern.</Description>
+        <Copyright>Copyright © Michael Logutov 2017</Copyright>
+    </PropertyGroup>
+    <!-- Properties for NuGet package -->
+    <PropertyGroup>
+        <IsPackable>true</IsPackable>
+        <PackageId>Rocks.Commands</PackageId>
+        <PackageVersion>$(Version)</PackageVersion>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <PackageProjectUrl>https://github.com/MichaelLogutov/Rocks.Commands</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/MichaelLogutov/Rocks.Commands/blob/master/LICENSE</PackageLicenseUrl>
+    </PropertyGroup>
+    <!-- NuGet packages -->
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" Version="11.0.0"/>
+        <PackageReference Include="SimpleInjector" Version="4.0.8"/>
+        <PackageReference Include="Microsoft.CSharp" Version="4.4.0"/>
+    </ItemGroup>
 </Project>
