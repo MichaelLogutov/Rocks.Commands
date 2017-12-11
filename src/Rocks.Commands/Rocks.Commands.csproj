@@ -1,30 +1,52 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <!-- Properties -->
-    <PropertyGroup>
-        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user
+  <!-- Properties -->
+  <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user
         </DefaultItemExcludes>
-        <TargetFramework>netstandard2.0</TargetFramework>
-        <Version>4.0.0</Version>
-        <FileVersion>$(Version)</FileVersion>
-        <AssemblyVersion>$(Version)</AssemblyVersion>
-        <Authors>Michael Logutov</Authors>
-        <Company>Michael Logutov</Company>
-        <Description>An implementation of the command/query pattern.</Description>
-        <Copyright>Copyright © Michael Logutov 2017</Copyright>
-    </PropertyGroup>
-    <!-- Properties for NuGet package -->
-    <PropertyGroup>
-        <IsPackable>true</IsPackable>
-        <PackageId>Rocks.Commands</PackageId>
-        <PackageVersion>$(Version)</PackageVersion>
-        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-        <PackageProjectUrl>https://github.com/MichaelLogutov/Rocks.Commands</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/MichaelLogutov/Rocks.Commands/blob/master/LICENSE</PackageLicenseUrl>
-    </PropertyGroup>
-    <!-- NuGet packages -->
+    <TargetFrameworks>netstandard2.0;net461;net471</TargetFrameworks>
+    <Version>4.1.0</Version>
+    <FileVersion>$(Version)</FileVersion>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <Authors>Michael Logutov</Authors>
+    <Company>Michael Logutov</Company>
+    <Description>An implementation of the command/query pattern.</Description>
+    <Copyright>Copyright © Michael Logutov 2017</Copyright>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Rocks.Commands.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <!-- Properties for NuGet package -->
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <PackageId>Rocks.Commands</PackageId>
+    <PackageVersion>$(Version)</PackageVersion>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/MichaelLogutov/Rocks.Commands</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/MichaelLogutov/Rocks.Commands/blob/master/LICENSE</PackageLicenseUrl>
+  </PropertyGroup>
+  <!-- NuGet packages -->
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.4.0" />
+    <PackageReference Include="SimpleInjector" Version="4.0.12" />
+  </ItemGroup>
+  <!-- NuGet packages for .NET Framework -->
+  <ItemGroup Condition="$(TargetFramework) == 'net461'">
+  </ItemGroup>
+  <ItemGroup Condition="$(TargetFramework) == 'net471'">
+  </ItemGroup>
+  <!-- NuGet packages for .NET Core -->
+  <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
+  </ItemGroup>
+  <!-- References for .NET Framework -->
+  <ItemGroup Condition="$(TargetFramework) == 'net461'">
+  </ItemGroup>
+  <ItemGroup Condition="$(TargetFramework) == 'net471'">
+  </ItemGroup>
+  <!-- Documentation -->
+  <Target Name="IncludeDocumentationFiles" BeforeTargets="PrepareForPublish">
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="11.0.0"/>
-        <PackageReference Include="SimpleInjector" Version="4.0.8"/>
-        <PackageReference Include="Microsoft.CSharp" Version="4.4.0"/>
+      <DocumentationFiles Include="bin\$(Configuration)\$(TargetFramework)\*.xml" />
     </ItemGroup>
+    <Copy SourceFiles="@(DocumentationFiles)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="false" />
+  </Target>
 </Project>

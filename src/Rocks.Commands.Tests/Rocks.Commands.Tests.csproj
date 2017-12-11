@@ -1,29 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <!-- Properties -->
-    <PropertyGroup>
-        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user
+  <!-- Properties -->
+  <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user
         </DefaultItemExcludes>
-        <TargetFramework>netcoreapp2.0</TargetFramework>
-    </PropertyGroup>
-    <!-- Properties for NuGet package -->
-    <PropertyGroup>
-        <IsPackable>false</IsPackable>
-    </PropertyGroup>
-    <!-- NuGet packages -->
-    <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0"/>
-        <PackageReference Include="xunit" Version="2.2.0"/>
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0"/>
-        <PackageReference Include="FluentAssertions" Version="4.19.4"/>
-    </ItemGroup>
-    <!-- Projects -->
-    <ItemGroup>
-        <ProjectReference Include="..\Rocks.Commands\Rocks.Commands.csproj"/>
-        <ProjectReference Include="..\Rocks.Commands.Tests.LibraryA\Rocks.Commands.Tests.LibraryA.csproj"/>
-        <ProjectReference Include="..\Rocks.Commands.Tests.LibraryB\Rocks.Commands.Tests.LibraryB.csproj"/>
-        <ProjectReference Include="..\Rocks.Commands.Tests.LibraryC\Rocks.Commands.Tests.LibraryC.csproj"/>
-        <ProjectReference Include="..\Rocks.Commands.Tests.LibraryD\Rocks.Commands.Tests.LibraryD.csproj"/>
-        <ProjectReference Include="..\Rocks.Commands.Tests.LibraryE\Rocks.Commands.Tests.LibraryE.csproj"/>
-        <ProjectReference Include="..\Rocks.Commands.Tests.LibraryF\Rocks.Commands.Tests.LibraryF.csproj"/>
-    </ItemGroup>
+    <TargetFrameworks>netstandard2.0;net461;net471</TargetFrameworks>
+  </PropertyGroup>
+  <!-- Properties for NuGet package -->
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <!-- NuGet packages -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="FluentAssertions" Version="4.19.4" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+  </ItemGroup>
+  <!-- Projects -->
+  <ItemGroup>
+    <ProjectReference Include="..\Rocks.Commands\Rocks.Commands.csproj" />
+    <ProjectReference Include="..\Rocks.Commands.Tests.LibraryA\Rocks.Commands.Tests.LibraryA.csproj" />
+    <ProjectReference Include="..\Rocks.Commands.Tests.LibraryB\Rocks.Commands.Tests.LibraryB.csproj" />
+    <ProjectReference Include="..\Rocks.Commands.Tests.LibraryC\Rocks.Commands.Tests.LibraryC.csproj" />
+    <ProjectReference Include="..\Rocks.Commands.Tests.LibraryD\Rocks.Commands.Tests.LibraryD.csproj" />
+    <ProjectReference Include="..\Rocks.Commands.Tests.LibraryE\Rocks.Commands.Tests.LibraryE.csproj" />
+    <ProjectReference Include="..\Rocks.Commands.Tests.LibraryF\Rocks.Commands.Tests.LibraryF.csproj" />
+  </ItemGroup>
 </Project>
