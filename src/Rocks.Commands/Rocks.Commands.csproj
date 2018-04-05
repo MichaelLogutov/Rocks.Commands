@@ -4,13 +4,13 @@
         <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user;**\*.nupkg
         </DefaultItemExcludes>
         <TargetFrameworks>net461;net471;netstandard2.0</TargetFrameworks>
-        <Version>4.1.0</Version>
+        <Version>4.2.0</Version>
         <FileVersion>$(Version)</FileVersion>
         <AssemblyVersion>$(Version)</AssemblyVersion>
         <Authors>Michael Logutov</Authors>
         <Company>Michael Logutov</Company>
         <Description>An implementation of the command/query pattern.</Description>
-        <Copyright>Copyright © Michael Logutov 2017</Copyright>
+        <Copyright>Copyright © Michael Logutov 2018</Copyright>
         <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Rocks.Commands.xml</DocumentationFile>
         <NoWarn>1591</NoWarn>
     </PropertyGroup>
@@ -27,7 +27,7 @@
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="11.0.0"/>
         <PackageReference Include="Microsoft.CSharp" Version="4.4.0"/>
-        <PackageReference Include="SimpleInjector" Version="4.0.12"/>
+        <PackageReference Include="SimpleInjector" Version="4.1.0"/>
     </ItemGroup>
     <!-- NuGet packages for .NET Framework -->
     <ItemGroup Condition="$(TargetFramework) == 'net461'">
