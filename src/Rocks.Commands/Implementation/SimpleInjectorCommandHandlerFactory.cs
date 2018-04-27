@@ -13,7 +13,7 @@ namespace Rocks.Commands.Implementation
 		public SimpleInjectorCommandHandlerFactory ([NotNull] Container container)
 		{
 			if (container == null)
-				throw new ArgumentNullException ("container");
+				throw new ArgumentNullException (nameof(container));
 
 			this.container = container;
 		}

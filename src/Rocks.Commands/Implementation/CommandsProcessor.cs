@@ -11,25 +11,17 @@ namespace Rocks.Commands.Implementation
 	[UsedImplicitly]
 	internal class CommandsProcessor : ICommandsProcessor
 	{
-		#region Private fields
-
 		private readonly ICommandHandlerFactory commandHandlerFactory;
 
-		#endregion
-
-		#region Construct
 
 		public CommandsProcessor ([NotNull] ICommandHandlerFactory commandHandlerFactory)
 		{
 			if (commandHandlerFactory == null)
-				throw new ArgumentNullException ("commandHandlerFactory");
+				throw new ArgumentNullException (nameof(commandHandlerFactory));
 
 			this.commandHandlerFactory = commandHandlerFactory;
 		}
 
-		#endregion
-
-		#region ICommandsProcessor Members
 
 		/// <summary>
 		///     Executes specified <paramref name="command" />.
@@ -124,14 +116,11 @@ namespace Rocks.Commands.Implementation
 			return result;
 		}
 
-		#endregion
-
-		#region Private methods
 
 		private static void Validate (object command)
 		{
 			if (command == null)
-				throw new ArgumentNullException ("command");
+				throw new ArgumentNullException (nameof(command));
 
 			var validatable_command = command as IValidatableCommand;
 			if (validatable_command != null)
@@ -197,7 +186,5 @@ namespace Rocks.Commands.Implementation
 
 			return result;
 		}
-
-		#endregion
 	}
 }

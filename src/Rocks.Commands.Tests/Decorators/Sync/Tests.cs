@@ -72,7 +72,7 @@ namespace Rocks.Commands.Tests.Decorators.Sync
 
 
             // assert
-            act.ShouldNotThrow ();
+            act.Should().NotThrow ();
         }
 
 
@@ -93,7 +93,7 @@ namespace Rocks.Commands.Tests.Decorators.Sync
 
 
             // assert
-            act.ShouldNotThrow ();
+            act.Should().NotThrow ();
         }
 
 

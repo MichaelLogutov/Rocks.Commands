@@ -11,8 +11,6 @@ namespace Rocks.Commands.Exceptions
 	[Serializable]
 	public class CommandHandlerNotFoundException : InvalidOperationException
 	{
-		#region Construct
-
 		protected internal CommandHandlerNotFoundException ()
 		{
 		}
@@ -24,9 +22,6 @@ namespace Rocks.Commands.Exceptions
 			this.ResultType = resultType;
 		}
 
-		#endregion
-
-		#region Public properties
 
 		public Type CommandType { get; protected internal set; }
 		public Type ResultType { get; protected internal set; }
@@ -49,7 +44,5 @@ namespace Rocks.Commands.Exceptions
 				return message;
 			}
 		}
-
-		#endregion
 	}
 }

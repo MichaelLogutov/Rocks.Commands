@@ -16,13 +16,7 @@ namespace Rocks.Commands
     /// </summary>
     public static class CommandsLibrary
     {
-        #region Private fields
-
         private static Lifestyle defaultLifestyle;
-
-        #endregion
-
-        #region Public properties
 
         /// <summary>
         ///     Dependency injection container that holds registration of all commands, handlers and implementation
@@ -37,9 +31,6 @@ namespace Rocks.Commands
         /// </summary>
         public static ICommandsProcessor CommandsProcessor { get; set; }
 
-        #endregion
-
-        #region Static methods
 
         /// <summary>
         ///     Perform initial setup of commands library by finding all commands handlers in <paramref name="assemblies" />
@@ -55,24 +46,24 @@ namespace Rocks.Commands
         ///     A list of assemblies to scan for <see cref="ICommandHandler{TCommand,TResult}" />
         ///     implementations. If null or empty the calling assembly will be used.
         /// </param>
-        public static void Setup (Container container = null,
-                                  Lifestyle lifestyle = null,
-                                  bool verifyAllCommandsHasHandlers = true,
-                                  params Assembly[] assemblies)
+        public static void Setup(Container container = null,
+                                 Lifestyle lifestyle = null,
+                                 bool verifyAllCommandsHasHandlers = true,
+                                 params Assembly[] assemblies)
         {
             Container = container ?? new Container { Options = { AllowOverridingRegistrations = true } };
             defaultLifestyle = lifestyle ?? Lifestyle.Transient;
 
             if (assemblies == null || assemblies.Length == 0)
-                assemblies = new[] { Assembly.GetCallingAssembly () };
+                assemblies = new[] { Assembly.GetCallingAssembly() };
 
-            var handler_factory = new SimpleInjectorCommandHandlerFactory (Container);
-            Container.RegisterSingleton (handler_factory);
+            var handler_factory = new SimpleInjectorCommandHandlerFactory(Container);
+            Container.RegisterInstance(handler_factory);
 
-            CommandsProcessor = new CommandsProcessor (handler_factory);
-            Container.RegisterSingleton (CommandsProcessor);
+            CommandsProcessor = new CommandsProcessor(handler_factory);
+            Container.RegisterInstance(CommandsProcessor);
 
-            RegisterAllCommandHandlers (Container, lifestyle, verifyAllCommandsHasHandlers, assemblies);
+            RegisterAllCommandHandlers(Container, lifestyle, verifyAllCommandsHasHandlers, assemblies);
         }
 
 
@@ -98,28 +89,28 @@ namespace Rocks.Commands
         ///     A list of assemblies to scan for <see cref="ICommandHandler{TCommand,TResult}" />
         ///     implementations. If null or empty the calling assembly will be used.
         /// </param>
-        public static void RegisterAllCommandHandlers (Container container = null,
-                                                       Lifestyle lifestyle = null,
-                                                       bool verifyAllCommandsHasHandlers = true,
-                                                       params Assembly[] assemblies)
+        public static void RegisterAllCommandHandlers(Container container = null,
+                                                      Lifestyle lifestyle = null,
+                                                      bool verifyAllCommandsHasHandlers = true,
+                                                      params Assembly[] assemblies)
         {
             container = container ?? Container;
             lifestyle = lifestyle ?? defaultLifestyle;
 
             if (container == null)
-                throw new ArgumentNullException ("container", "Parameter 'container' is null and Setup method was not called before");
+                throw new ArgumentNullException(nameof(container), "Parameter 'container' is null and Setup method was not called before");
 
             if (lifestyle == null)
-                throw new ArgumentNullException ("lifestyle", "Parameter 'lifestyle' is null and Setup method was not called before");
+                throw new ArgumentNullException(nameof(lifestyle), "Parameter 'lifestyle' is null and Setup method was not called before");
 
             if (assemblies == null || assemblies.Length == 0)
-                assemblies = new[] { Assembly.GetCallingAssembly () };
+                assemblies = new[] { Assembly.GetCallingAssembly() };
 
-            container.Register (typeof (ICommandHandler<,>), assemblies, lifestyle);
-            container.Register (typeof (IAsyncCommandHandler<,>), assemblies, lifestyle);
+            container.Register(typeof(ICommandHandler<,>), assemblies, lifestyle);
+            container.Register(typeof(IAsyncCommandHandler<,>), assemblies, lifestyle);
 
             if (verifyAllCommandsHasHandlers)
-                VerifyAllCommandsHasHandlers (container, assemblies);
+                VerifyAllCommandsHasHandlers(container, assemblies);
         }
 
 
@@ -128,13 +119,13 @@ namespace Rocks.Commands
         /// </summary>
         /// <param name="container">Container with all registered command handlers.</param>
         /// <param name="assemblies">Assemblies with commands to be checked.</param>
-        public static void VerifyAllCommandsHasHandlers ([NotNull] Container container, params Assembly[] assemblies)
+        public static void VerifyAllCommandsHasHandlers([NotNull] Container container, params Assembly[] assemblies)
         {
             if (container == null)
-                throw new ArgumentNullException ("container");
+                throw new ArgumentNullException(nameof(container));
 
-            VerifyAllCommandsHasHandlersCore (container, assemblies, typeof (ICommandHandler<,>), typeof (ICommand<>));
-            VerifyAllCommandsHasHandlersCore (container, assemblies, typeof (IAsyncCommandHandler<,>), typeof (IAsyncCommand<>));
+            VerifyAllCommandsHasHandlersCore(container, assemblies, typeof(ICommandHandler<,>), typeof(ICommand<>));
+            VerifyAllCommandsHasHandlersCore(container, assemblies, typeof(IAsyncCommandHandler<,>), typeof(IAsyncCommand<>));
         }
 
 
@@ -156,27 +147,27 @@ namespace Rocks.Commands
         /// <param name="predicate">
         ///     An optional predicate to filter out decorators.
         /// </param>
-        public static void RegisterCommandsDecorator ([NotNull] Type decoratorType,
-                                                      Container container = null,
-                                                      Lifestyle lifestyle = null,
-                                                      Predicate<DecoratorPredicateContext> predicate = null)
+        public static void RegisterCommandsDecorator([NotNull] Type decoratorType,
+                                                     Container container = null,
+                                                     Lifestyle lifestyle = null,
+                                                     Predicate<DecoratorPredicateContext> predicate = null)
         {
             if (decoratorType == null)
-                throw new ArgumentNullException ("decoratorType");
+                throw new ArgumentNullException(nameof(decoratorType));
 
             container = container ?? Container;
             lifestyle = lifestyle ?? defaultLifestyle;
 
             if (container == null)
-                throw new ArgumentNullException ("container", "Parameter 'container' is null and Setup method was not called before");
+                throw new ArgumentNullException(nameof(container), "Parameter 'container' is null and Setup method was not called before");
 
             if (lifestyle == null)
-                throw new ArgumentNullException ("lifestyle", "Parameter 'lifestyle' is null and Setup method was not called before");
+                throw new ArgumentNullException(nameof(lifestyle), "Parameter 'lifestyle' is null and Setup method was not called before");
 
             if (predicate != null)
-                container.RegisterDecorator (typeof (ICommandHandler<,>), decoratorType, lifestyle, predicate);
+                container.RegisterDecorator(typeof(ICommandHandler<,>), decoratorType, lifestyle, predicate);
             else
-                container.RegisterDecorator (typeof (ICommandHandler<,>), decoratorType, lifestyle);
+                container.RegisterDecorator(typeof(ICommandHandler<,>), decoratorType, lifestyle);
         }
 
 
@@ -198,69 +189,64 @@ namespace Rocks.Commands
         /// <param name="predicate">
         ///     An optional predicate to filter out decorators.
         /// </param>
-        public static void RegisterAsyncCommandsDecorator ([NotNull] Type decoratorType,
-                                                           Container container = null,
-                                                           Lifestyle lifestyle = null,
-                                                           Predicate<DecoratorPredicateContext> predicate = null)
+        public static void RegisterAsyncCommandsDecorator([NotNull] Type decoratorType,
+                                                          Container container = null,
+                                                          Lifestyle lifestyle = null,
+                                                          Predicate<DecoratorPredicateContext> predicate = null)
         {
             if (decoratorType == null)
-                throw new ArgumentNullException ("decoratorType");
+                throw new ArgumentNullException(nameof(decoratorType));
 
             container = container ?? Container;
             lifestyle = lifestyle ?? defaultLifestyle;
 
             if (container == null)
-                throw new ArgumentNullException ("container", "Parameter 'container' is null and Setup method was not called before");
+                throw new ArgumentNullException(nameof(container), "Parameter 'container' is null and Setup method was not called before");
 
             if (lifestyle == null)
-                throw new ArgumentNullException ("lifestyle", "Parameter 'lifestyle' is null and Setup method was not called before");
+                throw new ArgumentNullException(nameof(lifestyle), "Parameter 'lifestyle' is null and Setup method was not called before");
 
             if (predicate != null)
-                container.RegisterDecorator (typeof (IAsyncCommandHandler<,>), decoratorType, lifestyle, predicate);
+                container.RegisterDecorator(typeof(IAsyncCommandHandler<,>), decoratorType, lifestyle, predicate);
             else
-                container.RegisterDecorator (typeof (IAsyncCommandHandler<,>), decoratorType, lifestyle);
+                container.RegisterDecorator(typeof(IAsyncCommandHandler<,>), decoratorType, lifestyle);
         }
 
-        #endregion
 
-        #region Private methods
-
-        private static void VerifyAllCommandsHasHandlersCore (Container container,
-                                                              IEnumerable<Assembly> assemblies,
-                                                              Type commandHandlerGenericType,
-                                                              Type commandGenericType)
+        private static void VerifyAllCommandsHasHandlersCore(Container container,
+                                                             IEnumerable<Assembly> assemblies,
+                                                             Type commandHandlerGenericType,
+                                                             Type commandGenericType)
         {
-            var registered_types = container.GetCurrentRegistrations ().Select (x => x.Registration.ImplementationType).ToList ();
+            var registered_types = container.GetCurrentRegistrations().Select(x => x.Registration.ImplementationType).ToList();
 
             var registered_command_handlers_types = new HashSet<Type>
-                (registered_types
-                     .Where (t => t.IsClass && !t.IsAbstract)
-                     .SelectMany (t => t.GetInterfaces ()
-                                        .Where (i => i.IsGenericType && i.GetGenericTypeDefinition () == commandHandlerGenericType))
-                     .Distinct ());
+            (registered_types
+             .Where(t => t.IsClass && !t.IsAbstract)
+             .SelectMany(t => t.GetInterfaces()
+                               .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == commandHandlerGenericType))
+             .Distinct());
 
 
-            foreach (var command_type in assemblies.SelectMany (a => a.GetTypes ().Where (x => x.IsClass && !x.IsAbstract))
-                                                   .Distinct ())
+            foreach (var command_type in assemblies.SelectMany(a => a.GetTypes().Where(x => x.IsClass && !x.IsAbstract))
+                                                   .Distinct())
             {
-                var command_interfaces = command_type.GetInterfaces ()
-                                                     .Where (i => i.IsGenericType && i.GetGenericTypeDefinition () == commandGenericType)
-                                                     .ToList ();
+                var command_interfaces = command_type.GetInterfaces()
+                                                     .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == commandGenericType)
+                                                     .ToList();
 
-                if (!command_interfaces.Any ())
+                if (!command_interfaces.Any())
                     continue;
 
                 foreach (var command_interface in command_interfaces)
                 {
-                    var command_result_type = command_interface.GetGenericArguments ()[0];
-                    var command_handler_type = commandHandlerGenericType.MakeGenericType (command_type, command_result_type);
+                    var command_result_type = command_interface.GetGenericArguments()[0];
+                    var command_handler_type = commandHandlerGenericType.MakeGenericType(command_type, command_result_type);
 
-                    if (!registered_command_handlers_types.Contains (command_handler_type))
-                        throw new CommandHandlerNotFoundException (command_type, command_result_type);
+                    if (!registered_command_handlers_types.Contains(command_handler_type))
+                        throw new CommandHandlerNotFoundException(command_type, command_result_type);
                 }
             }
         }
-
-        #endregion
     }
 }

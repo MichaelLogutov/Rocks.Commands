@@ -81,9 +81,9 @@ namespace Rocks.Commands.Tests.Commands.Async
 
 
 			// assert
-			action.ShouldThrow<CommandHandlerNotFoundException> ()
+			action.Should().Throw<CommandHandlerNotFoundException> ()
 			      .Which
-			      .ShouldBeEquivalentTo (new CommandHandlerNotFoundException
+			      .Should().BeEquivalentTo (new CommandHandlerNotFoundException
 			                             {
 				                             CommandType = typeof (TestAsyncCommandWithoutHandler),
 				                             ResultType = typeof (Void)
@@ -104,9 +104,9 @@ namespace Rocks.Commands.Tests.Commands.Async
 
 
 			// assert
-			action.ShouldThrow<CommandHandlerNotFoundException> ()
+			action.Should().Throw<CommandHandlerNotFoundException> ()
 			      .Which
-			      .ShouldBeEquivalentTo (new CommandHandlerNotFoundException
+			      .Should().BeEquivalentTo (new CommandHandlerNotFoundException
 			                             {
 				                             CommandType = typeof (TestAsyncCommandWithPartialHandler),
 				                             ResultType = typeof (int)
@@ -130,7 +130,7 @@ namespace Rocks.Commands.Tests.Commands.Async
 
 
 			// assert
-			action.ShouldThrow<TestException> ();
+			action.Should().Throw<TestException> ();
 			query.Number.Should ().Be (1);
 		}
 	}
