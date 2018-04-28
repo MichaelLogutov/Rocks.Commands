@@ -3,8 +3,8 @@
   <PropertyGroup>
     <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user;**\*.nupkg
         </DefaultItemExcludes>
-    <TargetFrameworks>net461;net471;netstandard2.0</TargetFrameworks>
-    <Version>4.3.0</Version>
+    <TargetFrameworks>net471;netstandard2.0</TargetFrameworks>
+    <Version>4.4.0</Version>
     <FileVersion>$(Version)</FileVersion>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <Authors>Michael Logutov</Authors>
@@ -22,7 +22,10 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/MichaelLogutov/Rocks.Commands</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/MichaelLogutov/Rocks.Commands/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageReleaseNotes>4.3.0 (2018-04-27)
+    <PackageReleaseNotes>4.4.0 (2018-04-28)
+Removed .NET 4.6.1
+
+4.3.0 (2018-04-27)
 Packages update</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/MichaelLogutov/Rocks.Commands</RepositoryUrl>
   </PropertyGroup>
@@ -33,8 +36,6 @@ Packages update</PackageReleaseNotes>
     <PackageReference Include="SimpleInjector" Version="4.2.2" />
   </ItemGroup>
   <!-- NuGet packages for .NET Framework -->
-  <ItemGroup Condition="$(TargetFramework) == 'net461'">
-  </ItemGroup>
   <ItemGroup Condition="$(TargetFramework) == 'net471'">
   </ItemGroup>
   <!-- NuGet packages for .NET Core -->
