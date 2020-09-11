@@ -1,22 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <!-- Properties -->
   <PropertyGroup>
-    <DefaultItemExcludes>$(DefaultItemExcludes);**\*.v3.ncrunchproject;**\*.v3.ncrunchproject.user;**\*.nupkg
-        </DefaultItemExcludes>
-    <TargetFrameworks>net471;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net471;netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
-  <!-- Properties for NuGet package -->
   <PropertyGroup>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-  <!-- NuGet packages -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
-    <PackageReference Include="xunit" Version="2.3.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
-    <PackageReference Include="FluentAssertions" Version="5.3.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
   </ItemGroup>
-  <!-- Projects -->
   <ItemGroup>
     <ProjectReference Include="..\Rocks.Commands\Rocks.Commands.csproj" />
     <ProjectReference Include="..\Rocks.Commands.Tests.LibraryA\Rocks.Commands.Tests.LibraryA.csproj" />
